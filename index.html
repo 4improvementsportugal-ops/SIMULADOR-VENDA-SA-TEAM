@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de Venda · SA Team</title>
+<meta name="description" content="Descubra em 2 minutos o que falta para a sua casa vender mais depressa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+/* ================= CONFIGURAÇÃO DESTE CLIENTE ================= */
+var PIXEL_ID = 'PIXEL_ID_AQUI';
+var PIXEL_ATIVO = PIXEL_ID.indexOf('AQUI') === -1;
+var WEBHOOK_URL = '';
+var NOME_ORIGEM = 'SA Team Diagnostico de Venda';
+var MARCA = 'SA Team';
+var CHAVE_UNICA = 'diag_sateam';
+var PREFIXO_PAIS = '351';
+var CHAVE_CONSENTIMENTO = CHAVE_UNICA + '_cookies';
+
+/* ================= META PIXEL, carregamento condicionado ================= */
+function carregarSdkPixel(){
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+}
+function carregarPixel(){
+  if(!PIXEL_ATIVO || window.fbq) return;
+  carregarSdkPixel();
+  fbq('init', PIXEL_ID);
+  fbq('track','PageView');
+}
+function temConsentimento(){
+  try { return localStorage.getItem(CHAVE_CONSENTIMENTO)==='aceite'; }
+  catch(e){ return false; }
+}
+if (temConsentimento()) carregarPixel();
+</script>
+
+<style>
+:root{
+  --principal:#dbb874;
+  --destaque:#f5f5f5;
+  --fundo:#001f49;
+  --fundo-alt:#0a2c5c;
+  --texto-escuro:#13223f;
+  --texto-claro:#f5f5f5;
+  --erro:#e2635a;
+  --sombra: 0 20px 50px rgba(0,10,30,.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--fundo);
+  color:var(--texto-claro);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+.oculto{display:none !important;}
+
+/* ---------- topo ---------- */
+.topo{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 24px;max-width:1180px;margin:0 auto;
+}
+.logo{font-family:'Fraunces',serif;font-weight:600;font-size:20px;letter-spacing:.02em;color:var(--texto-claro);}
+.logo em{color:var(--principal);font-style:normal;}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 400px at 100% 0%, rgba(219,184,116,.16), transparent 60%),
+    radial-gradient(600px 400px at 0% 100%, rgba(245,245,245,.06), transparent 55%),
+    var(--fundo);
+}
+.hero-wrap{
+  max-width:1180px;margin:0 auto;padding:18px 24px 56px;
+  display:grid;grid-template-columns:1fr;gap:34px;
+}
+.hero-texto{order:2;}
+.hero-foto-bloco{order:-1;position:relative;}
+.hero-foto{
+  width:100%;aspect-ratio:16/10;max-height:34svh;object-fit:cover;
+  border-radius:20px;box-shadow:var(--sombra);
+}
+.hero-selo-flutuante{
+  position:absolute;left:10px;right:10px;bottom:10px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+  border-radius:14px;padding:12px 14px;
+  color:var(--texto-escuro);font-size:13.5px;line-height:1.35;font-weight:500;
+}
+.hero-selo-flutuante strong{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:15px;margin-bottom:2px;color:var(--fundo);}
+
+.hero-titulo{
+  font-weight:600;color:var(--texto-claro);
+  font-size:clamp(27px,7.4vw,42px);line-height:1.1;letter-spacing:-.026em;
+  text-wrap:balance;margin-bottom:16px;
+}
+.hero-titulo em{
+  display:block;font-style:italic;color:var(--principal);font-size:.72em;margin-top:6px;font-weight:400;
+}
+.hero-subtitulo{
+  font-size:15.5px;line-height:1.55;color:rgba(245,245,245,.82);max-width:52ch;margin-bottom:22px;
+}
+.btn-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--principal);color:var(--texto-escuro);
+  border:none;border-radius:999px;padding:15px 26px;
+  font-weight:600;font-size:16px;box-shadow:0 14px 30px rgba(219,184,116,.28);
+}
+.selos{display:flex;flex-wrap:wrap;gap:14px 20px;margin-top:22px;font-size:12.5px;color:rgba(245,245,245,.65);}
+.selos span{display:flex;align-items:center;gap:6px;}
+.selos span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--principal);}
+
+@media(min-width:900px){
+  .hero-wrap{grid-template-columns:1fr 1fr;align-items:center;gap:52px;padding:56px 24px 84px;}
+  .hero-texto{order:1;}
+  .hero-foto-bloco{order:2;}
+  .hero-titulo{font-size:clamp(38px,3.6vw,52px);}
+  .hero-foto{aspect-ratio:4/3;max-height:none;}
+  .hero-selo-flutuante{left:-34px;right:auto;bottom:32px;width:250px;position:absolute;}
+}
+@media(max-height:700px){
+  .hero-foto{max-height:26svh;}
+}
+
+/* ---------- quiz ---------- */
+.quiz-secao{max-width:640px;margin:0 auto;padding:0 20px 70px;}
+.quiz-card{
+  background:var(--destaque);color:var(--texto-escuro);
+  border-radius:22px;box-shadow:var(--sombra);
+  padding:30px 24px 26px;
+}
+.progresso-linha{height:5px;border-radius:99px;background:rgba(19,34,63,.12);overflow:hidden;margin-bottom:10px;}
+.progresso-barra{height:100%;background:var(--principal);width:25%;transition:width .35s ease;}
+.progresso-texto{font-size:12.5px;color:rgba(19,34,63,.55);margin-bottom:22px;font-weight:500;}
+
+.passo-titulo{font-size:21px;font-weight:600;margin-bottom:4px;}
+.passo-nota{font-size:13.5px;color:rgba(19,34,63,.6);margin-bottom:20px;}
+
+.campo{margin-bottom:20px;}
+.campo label.rotulo{display:block;font-size:13.5px;font-weight:600;margin-bottom:9px;}
+.grelha{display:grid;gap:9px;}
+.grelha-2{grid-template-columns:1fr 1fr;}
+.grelha-4{grid-template-columns:repeat(2,1fr);}
+@media(min-width:480px){.grelha-4{grid-template-columns:repeat(4,1fr);}}
+
+.opcao{
+  border:1.5px solid rgba(19,34,63,.16);border-radius:12px;
+  padding:12px 10px;font-size:13.5px;font-weight:500;text-align:center;
+  background:#fff;transition:all .15s ease;color:var(--texto-escuro);
+}
+.opcao.selecionada{border-color:var(--principal);background:rgba(219,184,116,.18);}
+.opcao-lista{display:block;width:100%;text-align:left;padding:13px 14px;}
+
+input[type=text],input[type=tel],input[type=email]{
+  width:100%;border:1.5px solid rgba(19,34,63,.16);border-radius:12px;
+  padding:13px 14px;font-size:15px;font-family:inherit;color:var(--texto-escuro);background:#fff;
+}
+input:focus{outline:none;border-color:var(--principal);}
+.campo.erro input,.campo.erro .grelha{border-color:var(--erro);}
+.campo.erro .opcao{border-color:rgba(226,99,90,.5);}
+.msg-erro{display:none;color:var(--erro);font-size:12.5px;margin-top:7px;font-weight:500;}
+.campo.erro .msg-erro{display:block;}
+
+.consent-linha{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:rgba(19,34,63,.75);margin-top:6px;}
+.consent-linha input{margin-top:3px;}
+.consent-linha a{color:var(--fundo);font-weight:600;}
+
+.nav-passos{display:flex;justify-content:space-between;gap:12px;margin-top:26px;}
+.btn-voltar{background:none;border:none;color:rgba(19,34,63,.55);font-weight:600;font-size:14px;padding:12px 6px;}
+.btn-continuar{
+  background:var(--fundo);color:#fff;border:none;border-radius:999px;
+  padding:14px 28px;font-weight:600;font-size:15px;flex:1;max-width:230px;
+}
+.btn-continuar:disabled{opacity:.6;}
+
+/* ---------- banner de consentimento ---------- */
+.banner-cookies{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--texto-escuro);color:#fff;
+  padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;
+  font-size:13px;line-height:1.5;box-shadow:0 -10px 30px rgba(0,0,0,.25);
+}
+.banner-cookies p{margin:0;max-width:64ch;flex:1;min-width:220px;}
+.banner-botoes{display:flex;gap:10px;flex-shrink:0;}
+.banner-botoes button{border-radius:999px;padding:10px 18px;font-size:13px;font-weight:600;border:none;}
+.btn-aceitar{background:var(--principal);color:var(--texto-escuro);}
+.btn-recusar{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4) !important;}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="logo">SA <em>Team</em></div>
+</header>
+
+<section class="hero">
+  <div class="hero-wrap">
+    <div class="hero-texto">
+      <h1 class="hero-titulo">A sua casa está pronta para ir para o mercado?
+        <em>Ou vai ficar meses à espera?</em>
+      </h1>
+      <p class="hero-subtitulo">
+        Duas casas iguais, na mesma rua: uma vende em seis semanas, a outra fica oito meses. A diferença raramente é o imóvel, é um documento em falta ou um processo mal preparado. Descubra onde está a sua.
+      </p>
+      <button class="btn-cta" onclick="irParaQuiz()">Começar o diagnóstico →</button>
+      <div class="selos">
+        <span>2 minutos</span>
+        <span>Sem compromisso</span>
+        <span>Resultado imediato</span>
+      </div>
+    </div>
+    <div class="hero-foto-bloco">
+      <img class="hero-foto" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=85" alt="Moradia representativa de uma venda bem preparada">
+      <div class="hero-selo-flutuante">
+        <strong>SA Team</strong>
+        Cada venda começa com um diagnóstico certo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-secao" id="quiz">
+  <div class="quiz-card">
+    <div class="progresso-linha"><div class="progresso-barra" id="barraProgresso"></div></div>
+    <div class="progresso-texto" id="textoProgresso">Passo 1 de 4</div>
+
+    <!-- PASSO 1 -->
+    <div class="passo" data-passo="1">
+      <div class="passo-titulo">Comecemos pelo imóvel</div>
+      <div class="passo-nota">Só para percebermos do que estamos a falar.</div>
+
+      <div class="campo" data-campo="tipo">
+        <label class="rotulo">Tipo de imóvel</label>
+        <div class="grelha grelha-2" role="group" aria-labelledby="rotuloTipo">
+          <button type="button" class="opcao" data-valor="Apartamento">Apartamento</button>
+          <button type="button" class="opcao" data-valor="Moradia">Moradia</button>
+          <button type="button" class="opcao" data-valor="Terreno">Terreno</button>
+          <button type="button" class="opcao" data-valor="Outro">Outro</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="tipologia" id="blocoTipologia">
+        <label class="rotulo">Tipologia</label>
+        <div class="grelha grelha-4" role="group">
+          <button type="button" class="opcao" data-valor="T0/T1">T0/T1</button>
+          <button type="button" class="opcao" data-valor="T2">T2</button>
+          <button type="button" class="opcao" data-valor="T3">T3</button>
+          <button type="button" class="opcao" data-valor="T4+">T4+</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="localizacao">
+        <label class="rotulo" for="inputLocalizacao">Localização (concelho e freguesia)</label>
+        <input type="text" id="inputLocalizacao" placeholder="Ex.: Cascais, Estoril">
+        <div class="msg-erro">Indique o concelho e a freguesia.</div>
+      </div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="passo oculto" data-passo="2">
+      <div class="passo-titulo">O que já tem em mãos</div>
+      <div class="passo-nota">É aqui que costumam estar os atrasos.</div>
+
+      <div class="campo" data-campo="acordo">
+        <label class="rotulo">Estão todos os proprietários de acordo em vender?</label>
+        <div class="grelha" style="grid-template-columns:1fr;">
+          <button type="button" class="opcao opcao-lista" data-valor="Sou o único proprietário">Sou o único proprietário</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Sim, está tudo acordado">Sim, está tudo acordado</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Ainda não há acordo entre todos">Ainda não há acordo entre todos</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Não sei / ainda não falámos">Não sei, ainda não falámos</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="documentos">
+        <label class="rotulo">Que documentos já tem?</label>
+        <div class="grelha" style="grid-template-columns:1fr 1fr;">
+          <button type="button" class="opcao" data-multi data-valor="Caderneta predial">Caderneta predial</button>
+          <button type="button" class="opcao" data-multi data-valor="Certidão permanente do registo">Certidão permanente</button>
+          <button type="button" class="opcao" data-multi data-valor="Licença de utilização">Licença de utilização</button>
+          <button type="button" class="opcao" data-multi data-valor="Certificado energético">Certificado energético</button>
+        </div>
+        <div class="grelha" style="grid-template-columns:1fr;margin-top:9px;">
+          <button type="button" class="opcao opcao-lista" data-exclusiva data-valor="Nenhum destes / não sei">Nenhum destes, não sei</button>
+        </div>
+        <div class="msg-erro">Escolha pelo menos uma opção.</div>
+      </div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="passo oculto" data-passo="3">
+      <div class="passo-titulo">O seu contexto</div>
+      <div class="passo-nota">Ajuda nos a preparar a chamada certa.</div>
+
+      <div class="campo" data-campo="motivo">
+        <label class="rotulo">Motivo da venda</label>
+        <div class="grelha" style="grid-template-columns:1fr;">
+          <button type="button" class="opcao opcao-lista" data-valor="Vou mudar de casa">Vou mudar de casa</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Recebi uma herança">Recebi uma herança</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Quero rentabilizar o investimento">Quero rentabilizar o investimento</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Mudança de vida (trabalho, separação, família)">Mudança de vida (trabalho, separação, família)</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Vou emigrar">Vou emigrar</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Outro">Outro</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="prazo">
+        <label class="rotulo">Prazo desejado</label>
+        <div class="grelha" style="grid-template-columns:1fr;">
+          <button type="button" class="opcao opcao-lista" data-valor="O mais rápido possível">O mais rápido possível</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Até 3 meses">Até 3 meses</button>
+          <button type="button" class="opcao opcao-lista" data-valor="3 a 6 meses">3 a 6 meses</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Mais de 6 meses">Mais de 6 meses</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Estou só a explorar a ideia">Estou só a explorar a ideia</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="mercado">
+        <label class="rotulo">Já está à venda?</label>
+        <div class="grelha" style="grid-template-columns:1fr;">
+          <button type="button" class="opcao opcao-lista" data-valor="Não, ainda não">Não, ainda não</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Sim, com agência em exclusivo">Sim, com agência em exclusivo</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Sim, com agência sem exclusivo">Sim, com agência sem exclusivo</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Sim, por minha conta">Sim, por minha conta</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="passo oculto" data-passo="4">
+      <div class="passo-titulo">Falta pouco</div>
+      <div class="passo-nota">Para lhe enviarmos o diagnóstico completo.</div>
+
+      <div class="campo" data-campo="nome">
+        <label class="rotulo" for="inputNome">Nome completo</label>
+        <input type="text" id="inputNome" placeholder="O seu nome completo">
+        <div class="msg-erro">Indique o nome completo, com espaço.</div>
+      </div>
+
+      <div class="campo" data-campo="tel">
+        <label class="rotulo" for="inputTel">Telemóvel</label>
+        <input type="tel" id="inputTel" placeholder="912 345 678">
+        <div class="msg-erro">Indique um número válido, com pelo menos 9 dígitos.</div>
+      </div>
+
+      <div class="campo" data-campo="email">
+        <label class="rotulo" for="inputEmail">Email</label>
+        <input type="email" id="inputEmail" placeholder="nome@email.com">
+        <div class="msg-erro">Indique um email válido.</div>
+      </div>
+
+      <div class="campo" data-campo="avaliacao">
+        <label class="rotulo">Quer marcar uma avaliação gratuita?</label>
+        <div class="grelha" style="grid-template-columns:1fr;">
+          <button type="button" class="opcao opcao-lista" data-valor="Sim, quero marcar">Sim, quero marcar</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Talvez / primeiro quero saber mais">Talvez, primeiro quero saber mais</button>
+          <button type="button" class="opcao opcao-lista" data-valor="Não, só queria o diagnóstico">Não, só queria o diagnóstico</button>
+        </div>
+        <div class="msg-erro">Escolha uma opção para continuar.</div>
+      </div>
+
+      <div class="campo" data-campo="consentimento">
+        <label class="consent-linha">
+          <input type="checkbox" id="checkConsentimento">
+          <span id="textoConsentimento">Autorizo a SA Team a contactar me sobre o meu diagnóstico.</span>
+        </label>
+        <div class="msg-erro">Tem de aceitar para receber o diagnóstico.</div>
+      </div>
+    </div>
+
+    <div class="nav-passos">
+      <button type="button" class="btn-voltar oculto" id="btnVoltar" onclick="voltarPasso()">← Voltar</button>
+      <button type="button" class="btn-continuar" id="btnContinuar" onclick="avancarPasso()">Continuar</button>
+    </div>
+  </div>
+</section>
+
+<div class="banner-cookies" id="bannerCookies">
+  <p>Usamos cookies para medir o desempenho dos nossos anúncios. Pode aceitar ou recusar; o seu diagnóstico funciona nas duas situações.</p>
+  <div class="banner-botoes">
+    <button class="btn-recusar" onclick="responderCookies(false)">Recusar</button>
+    <button class="btn-aceitar" onclick="responderCookies(true)">Aceitar</button>
+  </div>
+</div>
+
+<script>
+/* ================= ESTADO ================= */
+var passoAtual = 1;
+var TOTAL_PASSOS = 4;
+var A = { documentos: [] };
+var aEnviar = false;
+
+/* ================= BANNER DE COOKIES ================= */
+function iniciarBanner(){
+  var banner = document.getElementById('bannerCookies');
+  if (temConsentimento() || localStorage.getItem(CHAVE_CONSENTIMENTO)==='recusado') {
+    banner.classList.add('oculto');
+  }
+}
+function responderCookies(aceitou){
+  try { localStorage.setItem(CHAVE_CONSENTIMENTO, aceitou ? 'aceite' : 'recusado'); } catch(e){}
+  document.getElementById('bannerCookies').classList.add('oculto');
+  if (aceitou) carregarPixel();
+}
+iniciarBanner();
+
+function irParaQuiz(){
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+}
+
+/* ================= SELEÇÃO DE OPÇÕES ================= */
+document.querySelectorAll('.opcao').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var campoEl = btn.closest('.campo');
+    var multi = btn.hasAttribute('data-multi');
+    var exclusiva = btn.hasAttribute('data-exclusiva');
+
+    if (campoEl.dataset.campo === 'documentos') {
+      if (exclusiva) {
+        campoEl.querySelectorAll('.opcao').forEach(function(o){ o.classList.remove('selecionada'); });
+        btn.classList.add('selecionada');
+        A.documentos = ['Nenhum destes / não sei'];
+      } else {
+        campoEl.querySelector('[data-exclusiva]').classList.remove('selecionada');
+        btn.classList.toggle('selecionada');
+        var selecionados = [];
+        campoEl.querySelectorAll('[data-multi].selecionada').forEach(function(o){ selecionados.push(o.dataset.valor); });
+        A.documentos = selecionados;
+      }
+    } else if (multi) {
+      btn.classList.toggle('selecionada');
+    } else {
+      campoEl.querySelectorAll('.opcao').forEach(function(o){ o.classList.remove('selecionada'); });
+      btn.classList.add('selecionada');
+      A[campoEl.dataset.campo] = btn.dataset.valor;
+
+      if (campoEl.dataset.campo === 'tipo') {
+        var blocoTipologia = document.getElementById('blocoTipologia');
+        if (btn.dataset.valor === 'Terreno') {
+          blocoTipologia.classList.add('oculto');
+          A.tipologia = '';
+        } else {
+          blocoTipologia.classList.remove('oculto');
+        }
+      }
+    }
+    campoEl.classList.remove('erro');
+  });
+});
+
+/* ================= VALIDAÇÃO POR PASSO ================= */
+function validarPasso(n){
+  var ok = true;
+  var painel = document.querySelector('.passo[data-passo="'+n+'"]');
+
+  function marcarErro(campoEl){
+    campoEl.classList.add('erro');
+    ok = false;
+    if (ok === false && !document.querySelector('.campo.erro.ja-focado')) {
+      campoEl.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }
+
+  if (n === 1) {
+    if (!A.tipo) marcarErro(painel.querySelector('[data-campo="tipo"]'));
+    var precisaTipologia = A.tipo && A.tipo !== 'Terreno';
+    if (precisaTipologia && !A.tipologia) marcarErro(painel.querySelector('[data-campo="tipologia"]'));
+    var loc = document.getElementById('inputLocalizacao').value.trim();
+    if (loc.length < 2) marcarErro(painel.querySelector('[data-campo="localizacao"]')); else A.localizacao = loc;
+  }
+  if (n === 2) {
+    if (!A.acordo) marcarErro(painel.querySelector('[data-campo="acordo"]'));
+    if (!A.documentos || A.documentos.length === 0) marcarErro(painel.querySelector('[data-campo="documentos"]'));
+  }
+  if (n === 3) {
+    if (!A.motivo) marcarErro(painel.querySelector('[data-campo="motivo"]'));
+    if (!A.prazo) marcarErro(painel.querySelector('[data-campo="prazo"]'));
+    if (!A.mercado) marcarErro(painel.querySelector('[data-campo="mercado"]'));
+  }
+  if (n === 4) {
+    var nome = document.getElementById('inputNome').value.trim();
+    var nomeValido = nome.length >= 3 && nome.indexOf(' ') > -1;
+    if (!nomeValido) marcarErro(painel.querySelector('[data-campo="nome"]')); else A.nome = nome;
+
+    var tel = document.getElementById('inputTel').value.trim();
+    var digitos = tel.replace(/\D/g,'');
+    if (digitos.length < 9) marcarErro(painel.querySelector('[data-campo="tel"]')); else A.tel = tel;
+
+    var email = document.getElementById('inputEmail').value.trim();
+    var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regexEmail.test(email)) marcarErro(painel.querySelector('[data-campo="email"]')); else A.email = email;
+
+    if (!A.avaliacao) marcarErro(painel.querySelector('[data-campo="avaliacao"]'));
+
+    var check = document.getElementById('checkConsentimento');
+    if (!check.checked) marcarErro(painel.querySelector('[data-campo="consentimento"]')); else A.consentimento = true;
+  }
+  return ok;
+}
+
+/* ================= NAVEGAÇÃO ================= */
+function mostrarPasso(n){
+  document.querySelectorAll('.passo').forEach(function(p){ p.classList.add('oculto'); });
+  document.querySelector('.passo[data-passo="'+n+'"]').classList.remove('oculto');
+  document.getElementById('barraProgresso').style.width = (n/TOTAL_PASSOS*100)+'%';
+  document.getElementById('textoProgresso').textContent = 'Passo '+n+' de '+TOTAL_PASSOS;
+  document.getElementById('btnVoltar').classList.toggle('oculto', n===1);
+  document.getElementById('btnContinuar').textContent = (n===TOTAL_PASSOS) ? 'Ver o meu diagnóstico' : 'Continuar';
+}
+function avancarPasso(){
+  if (!validarPasso(passoAtual)) return;
+  if (passoAtual < TOTAL_PASSOS) {
+    passoAtual++;
+    mostrarPasso(passoAtual);
+  } else {
+    finalizar();
+  }
+}
+function voltarPasso(){
+  if (passoAtual > 1) { passoAtual--; mostrarPasso(passoAtual); }
+}
+
+/* ================= BLOCO 5, MOTOR DE DIAGNÓSTICO ================= */
+function diagnosticar(){
+  var doc = 100;
+  var faltamDocs = [];
+  var temDocs = A.documentos || [];
+  var mapaDocs = {
+    'Caderneta predial': 10,
+    'Certidão permanente do registo': 10,
+    'Licença de utilização': 15,
+    'Certificado energético': 25
+  };
+  var todosDocs = Object.keys(mapaDocs);
+  var semNenhum = temDocs.indexOf('Nenhum destes / não sei') > -1;
+
+  todosDocs.forEach(function(d){
+    var tem = !semNenhum && temDocs.indexOf(d) > -1;
+    if (!tem) { doc -= mapaDocs[d]; faltamDocs.push(d); }
+  });
+  doc = Math.max(0, Math.min(100, doc));
+
+  var acordo = 100;
+  var mapaAcordo = {
+    'Sou o único proprietário': 0,
+    'Sim, está tudo acordado': -5,
+    'Ainda não há acordo entre todos': -45,
+    'Não sei / ainda não falámos': -25
+  };
+  acordo += (mapaAcordo[A.acordo] || 0);
+  if (A.motivo === 'Recebi uma herança') acordo -= 10;
+  acordo = Math.max(0, Math.min(100, acordo));
+
+  var prontidao = 70;
+  var mapaPrazo = {
+    'O mais rápido possível': 15, 'Até 3 meses': 10, '3 a 6 meses': 5,
+    'Mais de 6 meses': 0, 'Estou só a explorar a ideia': -15
+  };
+  prontidao += (mapaPrazo[A.prazo] || 0);
+  var mapaMercado = {
+    'Não, ainda não': 5, 'Sim, por minha conta': 0,
+    'Sim, com agência sem exclusivo': -5, 'Sim, com agência em exclusivo': -30
+  };
+  prontidao += (mapaMercado[A.mercado] || 0);
+  if (A.avaliacao === 'Sim, quero marcar') prontidao += 5;
+  prontidao = Math.max(0, Math.min(100, prontidao));
+
+  var global = doc*0.45 + acordo*0.35 + prontidao*0.20;
+
+  var tempoEstimado, notaTempo;
+  if (global >= 80) { tempoEstimado='4 a 8 semanas'; notaTempo='A sua casa está pronta a ir a mercado.'; }
+  else if (global >= 65) { tempoEstimado='6 a 10 semanas'; notaTempo='Está quase, faltam ajustes pontuais.'; }
+  else if (global >= 50) { tempoEstimado='2 a 4 meses'; notaTempo='Há pontos a resolver antes de anunciar.'; }
+  else if (global >= 35) { tempoEstimado='4 a 6 meses'; notaTempo='Vários travões vão atrasar a venda.'; }
+  else { tempoEstimado='Mais de 6 meses'; notaTempo='Sem intervenção, a venda vai arrastar se.'; }
+
+  var travoesCandidatos = [];
+  if (faltamDocs.indexOf('Certificado energético') > -1) {
+    travoesCandidatos.push({ titulo:'Falta o certificado energético', texto:'É obrigatório por lei para anunciar o imóvel.' });
+  }
+  if (A.acordo === 'Ainda não há acordo entre todos') {
+    travoesCandidatos.push({ titulo:'Não há acordo entre proprietários', texto:'A escritura precisa da assinatura de todos.' });
+  }
+  if (A.acordo === 'Não sei / ainda não falámos') {
+    travoesCandidatos.push({ titulo:'Não sabe se há acordo', texto:'Fale com os coproprietários antes de anunciar. Descobrir a meio do processo queima o negócio.' });
+  }
+  if (A.mercado === 'Sim, com agência em exclusivo') {
+    travoesCandidatos.push({ titulo:'Contrato de exclusividade ativo', texto:'Só pode mudar de agência no fim do contrato atual.' });
+  }
+  if (A.motivo === 'Recebi uma herança') {
+    travoesCandidatos.push({ titulo:'Imóvel de herança', texto:'A partilha e a habilitação de herdeiros têm de estar concluídas antes da escritura.' });
+  }
+  if (faltamDocs.length >= 3) {
+    travoesCandidatos.push({ titulo:'Faltam três ou mais documentos', texto:'Reunir tudo leva semanas. Comece já.' });
+  }
+  var travoes = travoesCandidatos.slice(0,3);
+
+  var passos = [];
+  if (faltamDocs.indexOf('Certificado energético') > -1) {
+    passos.push('Pedir o certificado energético, é o primeiro documento a tratar.');
+  }
+  if (A.acordo === 'Ainda não há acordo entre todos' || A.acordo === 'Não sei / ainda não falámos') {
+    passos.push('Alinhar com todos os proprietários antes de mostrar a casa a quem quer que seja.');
+  }
+  if (A.mercado === 'Sim, com agência em exclusivo') {
+    passos.push('Confirmar a data de fim do contrato de exclusividade atual.');
+  }
+  passos.push('Marcar uma avaliação profissional gratuita, sem ela não há preço certo.');
+  passos.push('Preparar a casa para as visitas, sempre no fim.');
+  passos = passos.slice(0,4);
+  while (passos.length < 4) passos.push('Falar com a SA Team para definir os próximos passos.');
+
+  return {
+    scoreDocumentacao: Math.round(doc),
+    scoreAcordo: Math.round(acordo),
+    scoreProntidao: Math.round(prontidao),
+    scoreGlobal: Math.round(global),
+    tempoEstimado: tempoEstimado,
+    notaTempo: notaTempo,
+    faltamDocs: faltamDocs,
+    temDocsTexto: semNenhum ? [] : temDocs,
+    travoes: travoes,
+    proximosPassos: passos
+  };
+}
+
+/* ================= NORMALIZAR TELEFONE ================= */
+function normalizarTel(v){
+  var d = (v||'').replace(/\D/g,'');
+  if (!d) return '';
+  if (d.indexOf('00') === 0) d = d.slice(2);
+  if (d.length === 9) d = PREFIXO_PAIS + d;
+  return '+' + d;
+}
+
+/* ================= WEBHOOK ================= */
+function enviarWebhook(tel, first, last, D, eventId){
+  var payload = {
+    name: A.nome, first_name: first, last_name: last,
+    phone: tel, email: A.email,
+    timestamp: new Date().toISOString(),
+    origem: NOME_ORIGEM,
+    pagina_url: window.location.href,
+    event_id: eventId,
+    consentimento_rgpd: temConsentimento() ? 'Sim' : 'Não',
+    imovel_tipo: A.tipo, imovel_tipologia: A.tipologia || 'N/A', imovel_localizacao: A.localizacao,
+    acordo_venda: A.acordo,
+    documentos_que_tem: D.temDocsTexto.join(', ') || 'Nenhum',
+    documentos_em_falta: D.faltamDocs.join(', ') || 'Nenhum',
+    motivo_venda: A.motivo, prazo_venda: A.prazo, ja_no_mercado: A.mercado, quer_avaliacao: A.avaliacao,
+    score_documentacao: D.scoreDocumentacao, score_acordo: D.scoreAcordo,
+    score_prontidao: D.scoreProntidao, score_global: D.scoreGlobal,
+    tempo_estimado: D.tempoEstimado,
+    travoes: D.travoes.map(function(t){ return t.titulo; }).join(' | '),
+    raw: A
+  };
+
+  if (!WEBHOOK_URL) {
+    console.log('[Modo demo] payload do webhook:', payload);
+    return;
+  }
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    keepalive: true,
+    body: JSON.stringify(payload)
+  }).catch(function(erro){ console.log('Falha no envio do webhook', erro); });
+}
+
+/* ================= FINALIZAR ================= */
+function finalizar(){
+  if (aEnviar) return;
+  aEnviar = true;
+  var btn = document.getElementById('btnContinuar');
+  btn.disabled = true;
+  btn.textContent = 'A preparar o seu diagnóstico…';
+
+  var D = diagnosticar();
+  var tel = normalizarTel(A.tel);
+  var partes = (A.nome||'').trim().split(/\s+/);
+  var first = partes[0]||'', last = partes.slice(1).join(' ')||'';
+  var eventId = 'lead-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+
+  try {
+    sessionStorage.setItem(CHAVE_UNICA, JSON.stringify({ A:A, D:D, eventId:eventId, ts:Date.now() }));
+  } catch(e){}
+
+  if (PIXEL_ATIVO && typeof fbq === 'function') {
+    fbq('init', PIXEL_ID, { em:A.email, ph:tel, fn:first, ln:last });
+    fbq('track', 'Lead', { content_name: NOME_ORIGEM, content_category: MARCA }, { eventID: eventId });
+  }
+
+  enviarWebhook(tel, first, last, D, eventId);
+
+  var jaFoi = false;
+  var ir = function(){ if (jaFoi) return; jaFoi = true; window.location.href = 'resultado.html'; };
+  setTimeout(ir, 800);
+  setTimeout(ir, 2500);
+}
+</script>
+</body>
+</html>
